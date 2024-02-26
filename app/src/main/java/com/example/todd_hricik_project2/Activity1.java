@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
 import androidx.activity.OnBackPressedCallback;
@@ -13,12 +14,18 @@ import androidx.core.app.NavUtils;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 
@@ -29,11 +36,46 @@ public class Activity1 extends AppCompatActivity implements NavigationView.OnNav
     NavigationView navigationView;
     // Declare a drawer layout
     DrawerLayout drawerLayout;
+    // Implement the intro fragment
+    public static class IntroFragmentActivity1 extends Fragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            super.onCreate(savedInstanceState);
+            // Inflate the layout for this fragment;
+            View v = inflater.inflate(R.layout.intro_fragment_activity_1, container, false);
+            return v;
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_1);
+        /* Check status of any fragments
+        // This was recomended by the android dev docs and not by proff. Maybe leave until last if neccessary
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.intro_fragment_activity_1, SplashActivity.class, null)
+                    .commit();
+        }
+        */
+        // Might not need this: Declare a container to hold either of the two fragments
+        // LinearLayout linearLayoutIntroFragmentContainer = (LinearLayout) findViewById(R.layout.intro_fragment_activity_1);
+        // Create the intro fragment
+        // introFragmentActivity1 = new IntroFragmentActivity1();
+        // Declare a fragment manager for activity 1
+        FragmentManager introFragmentManagerActivity1 = getSupportFragmentManager();
+        // Declare a FragmentTransaction for activity 1
+        FragmentTransaction introFragmentTransactionActivity1 = introFragmentManagerActivity1.beginTransaction();
+        // Add a fragment to the activity
+        introFragmentTransactionActivity1.add(R.id.framelayout_container_activity_1, new IntroFragmentActivity1());
+        // Commit the fragment to the container
+        introFragmentTransactionActivity1.commit();
+
+        // Work for drawer via NavigationView
         // Set the NavigationView by id
         navigationView = (NavigationView) findViewById(R.id.navigation_view_activity_1);
         // Set the DrawerView to

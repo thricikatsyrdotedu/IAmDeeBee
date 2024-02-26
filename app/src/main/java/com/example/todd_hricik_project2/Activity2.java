@@ -31,8 +31,6 @@ public class Activity2 extends AppCompatActivity {
         ab.setTitle("IAmDeeBee");
         // Set the color of the title of the app bar to white
         // ab.setTitleTextColor(getResources().getColor(android.R.color.white));
-
-
     }
     // Use the prof's code to handle onCreateOptionsMenu(Menu menu) event
     @Override

@@ -1,4 +1,7 @@
 package com.example.todd_hricik_project2;
+import static androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,61 +28,70 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.Random;
 public class Activity1 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
     // Declare a Toolbar
     Toolbar toolbar;
     // Declare a NavigationView
     NavigationView navigationView;
-    // Declare a drawer layout
+    // Declare a drawer layout for the NavigationView
     DrawerLayout drawerLayout;
-    // Implement the intro fragment
+
+    // Declare a MovieData object
+    private MovieData movieData;
+
+    /* ------------- Work for the intro fragment used at the beginning of Activity 1 -------------*/
+    // Implement the intro fragment element
     public static class IntroFragmentActivity1 extends Fragment {
+        @Nullable
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
         {
             super.onCreate(savedInstanceState);
             // Inflate the layout for this fragment;
             View v = inflater.inflate(R.layout.intro_fragment_activity_1, container, false);
             return v;
         }
+        /*  TODO: Add onAttach() method to IntroFragmentActivity1 class in Activity1.java
+            onAttach(){}
+        */
 
+        /*  TODO: Add onPause() method to IntroFragmentActivity1 class in Activity1.java
+            onPause(){}
+        */
     }
+    /* -------------- End Work for the intro fragment used at the beginning of Activity 1 --------*/
 
+    /* ----------------------------- Work for onCreate() method of Acitivty 1 --------------------*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_1);
-        /* Check status of any fragments
-        // This was recomended by the android dev docs and not by proff. Maybe leave until last if neccessary
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .add(R.id.intro_fragment_activity_1, SplashActivity.class, null)
-                    .commit();
-        }
-        */
-        // Might not need this: Declare a container to hold either of the two fragments
-        // LinearLayout linearLayoutIntroFragmentContainer = (LinearLayout) findViewById(R.layout.intro_fragment_activity_1);
-        // Create the intro fragment
-        // introFragmentActivity1 = new IntroFragmentActivity1();
+        // Create an instance of the MovieData class
+        movieData = new MovieData();
+        /* -------------------- Work for fragments in Activity 1 onCreate() --------------------------- */
         // Declare a fragment manager for activity 1
         FragmentManager introFragmentManagerActivity1 = getSupportFragmentManager();
         // Declare a FragmentTransaction for activity 1
         FragmentTransaction introFragmentTransactionActivity1 = introFragmentManagerActivity1.beginTransaction();
         // Add a fragment to the activity
-        introFragmentTransactionActivity1.add(R.id.framelayout_container_activity_1, new IntroFragmentActivity1());
+        introFragmentTransactionActivity1.setReorderingAllowed(true)
+                .add(R.id.framelayout_container_activity_1, new IntroFragmentActivity1());
         // Commit the fragment to the container
         introFragmentTransactionActivity1.commit();
+        /* -------------------- End Work for fragments in Activity 1 onCreate() --------------------------- */
 
-        // Work for drawer via NavigationView
-        // Set the NavigationView by id
-        navigationView = (NavigationView) findViewById(R.id.navigation_view_activity_1);
-        // Set the DrawerView to
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_activity_1);
+        /* -------------------- Work for Toolbar in Activity 1 --------------------------- */
         // Instantiate a toolbar to be visible on all activities
         toolbar = (Toolbar) findViewById(R.id.my_toolbar_activity1);
         // Set the app bar to the new toolbar
@@ -90,8 +102,15 @@ public class Activity1 extends AppCompatActivity implements NavigationView.OnNav
         ab.setTitle("IAmDeeBee");
         // Set the color of the title of the app bar to white
         // ab.setTitleTextColor(getResources().getColor(android.R.color.white));
+        /* -------------------- End Work for Toolbar in Activity 1 --------------------------- */
 
-        // Set up drawer toggle
+        /* -------------------- Work for NavigationView (drawer) in Activity 1 --------------------------- */
+        // Work for drawer via NavigationView
+        // Set the NavigationView by id
+        navigationView = (NavigationView) findViewById(R.id.navigation_view_activity_1);
+        // Set the DrawerView to
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_activity_1);
+        // Set up drawer toggle in the Toolbar
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(Activity1.this,
                 drawerLayout,
                 toolbar,
@@ -100,7 +119,6 @@ public class Activity1 extends AppCompatActivity implements NavigationView.OnNav
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-
                 Toast.makeText(Activity1.this, "open", Toast.LENGTH_SHORT).show();
             }
             @Override
@@ -112,8 +130,11 @@ public class Activity1 extends AppCompatActivity implements NavigationView.OnNav
         navigationView.setNavigationItemSelectedListener(this);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+        /* -------------------- End Work for NavigationView (drawer) in Activity 1 --------------------------- */
     }
+    /* ----------------------------- End Work for onCreate() method of Acitivty 1 --------------------*/
 
+    /* -------------------- Work for Menu items in Toolbar in Activity 1 --------------------------- */
     // Use the prof's code to handle onCreateOptionsMenu(Menu menu) event
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -127,7 +148,6 @@ public class Activity1 extends AppCompatActivity implements NavigationView.OnNav
         MenuItem action_bar_text_3 = menu.findItem(R.id.action_bar_text_3);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         // Get the ItemId of the options item selected
@@ -151,7 +171,9 @@ public class Activity1 extends AppCompatActivity implements NavigationView.OnNav
             return true;
         } else return super.onOptionsItemSelected(item);
     }
+    /* -------------------- Work for Menu items in Toolbar in Activity 1 --------------------------- */
 
+    /* -------------------- Work for NavigationView drawer menu items in Activity 1 --------------------------- */
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         int id = menuItem.getItemId();
@@ -160,7 +182,9 @@ public class Activity1 extends AppCompatActivity implements NavigationView.OnNav
             Toast.makeText(this, "clicked drawer item1", Toast.LENGTH_SHORT).show();
             // Create an intent to move to activity 2
             Intent intentActivity2 = new Intent(Activity1.this, Activity2.class);
+            // Start Activity 2
             startActivity(intentActivity2);
+            // Close the NavigationView Drawer
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         }
@@ -169,16 +193,50 @@ public class Activity1 extends AppCompatActivity implements NavigationView.OnNav
             Toast.makeText(this, "clicked drawer item2", Toast.LENGTH_SHORT).show();
             // Create an intent to move to activity 3
             Intent intentActivity3 = new Intent(Activity1.this, Activity3.class);
+            // Start Activity 3
             startActivity(intentActivity3);
+            // Close the NavigationView Drawer
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         }
         else if (id == R.id.navigation_view_menu_item_random_madness_activity_1) {
-            // Choose a random movie
+            // Choose a random movie and display its contents in the fragment container
+            // Create a random number generator
+            Random rng = new Random();
+            // Choose a random
+            Integer i = rng.nextInt(movieData.getSize());
+            // Get a handle on another fragment designed for a movie
+            MovieFragmentActivity1 movieFragment = MovieFragmentActivity1.newInstance(Integer.toString(movieData.getItem(i).resource_id), movieData.getItem(i).name, movieData.getItem(i).desc);
+            // Declare a fragment manager
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            // Declare a fragmentTransaction
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            // Swap the previous fragment out and the new movie fragment fragment in
+            fragmentTransaction.setReorderingAllowed(true).replace(R.id.framelayout_container_activity_1, movieFragment );
+            // Add the old fragment to the back stack
+            fragmentTransaction.addToBackStack(null);
+            // Set transition for the fragment
+            fragmentTransaction.setTransition( TRANSIT_FRAGMENT_OPEN );
+            // Commit the fragment to the container where TRANSIT_FRAGMENT_OPEN is some constant value
+            fragmentTransaction.commit();
             Toast.makeText(this, "clicked drawer item3", Toast.LENGTH_SHORT).show();
+            // Close the NavigationView Drawer
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         }
         return false;
     }
+    /* -------------------- End Work for NavigationView drawer menu items in Activity 1 --------------------------- */
+
+    /* -------------------- Work for  using the back stack with the activity 1 fragments -------------- */
+    @Override
+    public void onBackPressed(){
+        if (getFragmentManager().getBackStackEntryCount() >0){
+            getSupportFragmentManager().popBackStack();
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+    /* -------------------- End Work for  using the back stack with the activity 1 fragments -------------- */
 }

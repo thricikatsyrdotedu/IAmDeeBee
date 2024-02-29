@@ -5,16 +5,26 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NavUtils;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.view.LayoutInflater;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.squareup.picasso.Picasso;
+import java.util.List;
 
-public class Activity2 extends AppCompatActivity {
+public class Activity2 extends AppCompatActivity implements RecyclerItemClickListener{
+
     Toolbar toolbar;
+    private RecyclerView recycler_view;
+    private SimpleRecyclerAdapter adapter_items;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +41,17 @@ public class Activity2 extends AppCompatActivity {
         ab.setTitle("IAmDeeBee");
         // Set the color of the title of the app bar to white
         // ab.setTitleTextColor(getResources().getColor(android.R.color.white));
+
+        // -------------------------- Work on RecyclerView -------------------------------------
+        recycler_view = (RecyclerView)findViewById(R.id.recycler_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.scrollToPosition(0);
+        recycler_view.setLayoutManager(layoutManager);
+        adapter_items = new SimpleRecyclerAdapter();
+        adapter_items.setOnItemClickListener(this);
+        recycler_view.setAdapter(adapter_items);
+        // ------------------------ End Work on RecyclerView -----------------------------------
     }
     // Use the prof's code to handle onCreateOptionsMenu(Menu menu) event
     @Override
@@ -66,5 +87,16 @@ public class Activity2 extends AppCompatActivity {
             return true;
         }
         else return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(View v, int position) {
+        Toast t= Toast.makeText(getApplicationContext(),"Click pos"+Integer.toString(position), Toast.LENGTH_SHORT);
+        t.show();
+    }
+
+    @Override
+    public void onItemLongClick(View v, int position) {
+        adapter_items.removeMovie(position);
     }
 }

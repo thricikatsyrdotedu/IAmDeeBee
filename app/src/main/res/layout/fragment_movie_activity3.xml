@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="200dp"
+android:layout_height="400dp"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:orientation="vertical"
+tools:context=".Activity3"
+android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/fragment_movie_activity3_textview1"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_movie_activity3_textview2"/>
+    <TextView
+        android:id="@+id/fragment_movie_activity3_textview2"
+        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_movie_activity3_textview1" />
+    <TextView
+        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        android:id="@+id/fragment_movie_activity3_textview3"
+        app:layout_constraintTop_toBottomOf="@id/fragment_movie_activity3_textview2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+    <TextView
+        android:id="@+id/fragment_movie_activity3_textview4"
+        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_movie_activity3_textview3" />
+    <TextView
+        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:id="@+id/fragment_movie_activity3_textview5"
+        app:layout_constraintTop_toBottomOf="@id/fragment_movie_activity3_textview4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</LinearLayout>
+
+<!--
+-->

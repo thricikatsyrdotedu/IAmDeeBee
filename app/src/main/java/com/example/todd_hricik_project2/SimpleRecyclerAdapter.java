@@ -1,5 +1,7 @@
 package com.example.todd_hricik_project2;
 
+import static androidx.core.view.ViewCompat.setTransitionName;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
@@ -18,7 +21,7 @@ import java.util.List;
 
 public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAdapter.ViewHolder> {
     List<Movie> list_movie;
-    RecyclerItemClickListener vc=null;
+    RecyclerItemClickListener vc = null;
     public SimpleRecyclerAdapter() {
         MovieData movieData = new MovieData();
         this.list_movie = movieData.getMoviesList();
@@ -30,10 +33,12 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
         list_movie.remove(position);
         this.notifyItemRemoved(position);
     }
+/*
     public void addMovie(String name, String year){
         list_movie.add(5, new Movie(name, year, R.drawable.default_poster));
         this.notifyItemInserted(5);
     }
+*/
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,7 +48,10 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
             @Override
             public void onClick(View v) {
                 if(vc!=null)
-                    vc.onItemClick(v,view_holder.getAdapterPosition());
+                    // <TH>
+                    // vc.onItemClick(v,view_holder.getAdapterPosition());
+                    vc.onItemClick(v.findViewById(R.id.poster_photo), list_movie.get(view_holder.getAdapterPosition()));
+                    // </TH>
             }
         });
         v.setOnLongClickListener(new View.OnLongClickListener() {
@@ -62,6 +70,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
         Movie _movie = list_movie.get(position);
         holder.movie_name.setText(_movie.name);
         holder.movie_year.setText(_movie.year);
+        ViewCompat.setTransitionName(holder.poster_img, _movie.name);
         if (_movie.resource_id != -1){
             holder.poster_img.setImageResource(_movie.resource_id);
         } else {
